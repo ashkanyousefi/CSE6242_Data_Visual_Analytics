@@ -7,9 +7,13 @@ import collections
 from pygexf.gexf import *
 
 
+
 #
 # implement your data retrieval code here
 #
+Argument_List=str(sys.argv)
+
+
 
 
 # complete auto grader functions for Q1.1.b,d
