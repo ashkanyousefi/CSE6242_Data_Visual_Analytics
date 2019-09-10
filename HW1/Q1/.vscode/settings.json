@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "C:\\Users\\ashka\\Anaconda3\\python.exe",
+    "python.testing.pytestArgs": [
+        "pygexf"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.formatting.provider": "yapf"
+}
