@@ -65,7 +65,6 @@ def lego_sets():
 		total_set_num.append(raw_data['results'][i]['set_num'])
 	return total_set_num
 
-
 results = lego_sets()
 
 #%%
@@ -91,27 +90,36 @@ for set_num in results[0:3]:
 	
 	# set_number_parts.update()
 
-
-
-	
-
 #%%
 #This is a test cell 
 f=open('Results_Dictionary.txt','r')
 data=f.read()
-	
-
 
 
 #%%
+#Constructing a graph using the pygexf
 def gexf_graph():
 	"""
 	return the completed Gexf graph object
 	"""
+	sys.path.append('../gexf')
+	from gexf import Gexf, GexfImport
+
+	# test helloworld.gexf
+	gexf = Gexf("Paul Girard","A hello world! file")
+	graph=gexf.addGraph("directed","static","a hello world graph")
+
+	graph.addNode("0","hello")
+	graph.addNode("1","World")
+	graph.addEdge("0","0","1")
+
+	output_file=open("helloworld.gexf","w")
+	gexf.write(output_file)
+
 	# you must replace these lines and supply your own graph
-	my_gexf = Gexf("author", "title")
-	gexf.addGraph("undirected", "static", "I'm an empty graph")
-	return gexf.graphs[0]
+	# my_gexf = Gexf("author", "title")
+	# gexf.addGraph("undirected", "static", "I'm an empty graph")
+	# return gexf.graphs[0]
 
 # complete auto-grader functions for Q1.2.d
 
@@ -140,7 +148,6 @@ def avg_path_length():
 	"""
 	# you must replace this value with the avg path length
 	return -1
-
 #%%
 def get_lego_parts(leg_set):
 	set_numbers = [lego_set['set_num'] for lego_set in results['results']]
