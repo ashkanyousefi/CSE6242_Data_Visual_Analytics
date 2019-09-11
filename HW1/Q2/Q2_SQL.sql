@@ -22,9 +22,9 @@ CREATE TABLE PARTS (
 );
 
 .mode csv
-.import '//data/sets.csv/' SETS
-.import '//data/themes.csv/' THEMES
-.import '//data/parts.csv/' PARTS
+.import '/data/sets.csv/' SETS
+.import '/data/themes.csv/' THEMES
+.import '/data/parts.csv/' PARTS
 
 -- BULK INSERT SETS
 -- FROM 'sets.csv'
@@ -55,6 +55,48 @@ CREATE TABLE PARTS (
 -- ROWTERMINATOR='\n',
 -- TABLOCK
 -- );
+
+CREATE INDEX sets_index ON SETS(set_num);
+CREATE INDEX parts_index ON parts(part_num);
+CREATE INDEX themes_index ON themes(id);
+
+
+
+-- Next question 
+CREATE VIEW top_level_themes AS
+(SELECT id,name FROM themes WHERE themes.parent_id='');
+
+
+-- Next question
+SELECT count(id) as count FROM top_level_themes;
+
+--Next question
+
+SELECT name,count from 
+(
+SELECT name,count(id) as count FROM top_level_themes
+order BY
+count  DEC
+);
+
+
+-- Next question
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
