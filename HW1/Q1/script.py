@@ -44,7 +44,7 @@ def lego_sets():
 	"""
 	# you must replace this line and return your own list
 	max_parts = 300
-	page_size = 10000
+	page_size = 10
 	limit = 300
 
 	url='https://rebrickable.com/api/v3/lego/sets/?'\
@@ -60,10 +60,11 @@ def lego_sets():
 	encoding=data.info().get_content_charset('utf-8')
 	raw_data=json.loads(response.decode(encoding))
 	
-	total_set_num=[]
-	for i in range(300):
-		total_set_num.append(raw_data['results'][i]['set_num'])
-	return total_set_num
+	raw_data['results'] = raw_data['results'][:300]
+	# total_set_num=[]
+	# for i in range(300):
+	# 	total_set_num.append(raw_data['results'][i]['set_num'])
+	return raw_data['results']
 
 results = lego_sets()
 
