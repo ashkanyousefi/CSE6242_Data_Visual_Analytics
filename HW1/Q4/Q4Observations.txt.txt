@@ -1,0 +1,8 @@
+i.rows:10000
+ii.columns:3
+iii.function:ngram-fingerprint
+iv.GREL_brandname:if(value==null,'unbranded',value)
+v.GREL_highpriced:if(value > 100, "1", "0")
+vi.GREL_hasoffer: endsWith("food", "ood")
+
+	

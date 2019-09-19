@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/javascript" src="lib/d3/d3.min.js"></script>
+        <script type="text/javascript" src="lib/d3-dsv/d3-dsv.min.js"></script>
+        <script type="text/javascript" src="lib/d3-fetch/d3-fetch.min.js "></script>
+        <meta charset="utf-8">
+        <style>
+            .bar {
+                fill: steelblue;
+            }
+        </style>
+    </head>
+    <body>
+        <svg width="600" height="500"></svg>
+        <script>
+        
+            
+    var svg = d3.select("svg"),
+        margin = 200,
+        width = svg.attr("width") - margin,
+        height = svg.attr("height") - margin
+
+    svg.append("text")
+       .attr("transform", "translate(150,0)")
+       .attr("x", 50)
+       .attr("y", 50)
+       .attr("font-size", "24px")
+       .text("Q3 Chart")
+
+    var g = svg.append("g")
+               .attr("transform", "translate(" + 100 + "," + 100 + ")");
+    
+    d3.csv("q3.csv").then(function(data) {
+        x_min = Math.min(...data.map(function(d) {return d.year})) - 10 ;
+        x_max = Math.max(...data.map(function(d) {return d.year})) + 10;
+        y_min = Math.min(...data.map(function(d) {return d.running_total})) - 10;
+        y_max = Math.max(...data.map(function(d) {return d.running_total})) + 10;
+        console.log([x_min ,x_max]);
+        console.log([y_min ,y_max]);
+        
+        var xScale = d3.scaleLinear().domain([x_min ,x_max]).range([0, width]),
+            yScale = d3.scaleLinear().domain([y_min, y_max]).range([height, 0]);
+        g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale))
+        .append("text")
+        .attr("y", height - 250)
+        .attr("x", width - 200)
+        .attr("text-anchor", "end")
+        .attr("stroke", "black")
+        .text("Year");
+
+        g.append("g")
+         .call(d3.axisLeft(yScale))
+         .append("text")
+         .attr("transform", "rotate(-90)")
+         .attr("y", 6)
+         .attr("x", -100)
+         .attr("dy", "-5.1em")
+         .attr("text-anchor", "end")
+         .attr("stroke", "black")
+         .text("Running Total");
+        
+        g.selectAll("rect")
+         .data(data)
+         .enter()
+         .append("rect")
+         .attr("class", "bar")
+         .attr("x", function(d) { return xScale(d.year); })
+         .attr("y", function(d) { return yScale(d.running_total); })
+         .attr("width", 1)
+         .attr("height", function(d) { return height - yScale(d.running_total); });
+    });
+    </script>
+    </body>
+</html>
+
+<!-- <script  type="text/javascript" src="lib/d3.v5.min.js"></script> -->
+
+
+
+<!-- python -m http.server -->

@@ -1,0 +1,106 @@
+[
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "category_name",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "/",
+    "regex": false,
+    "maxColumns": 0,
+    "description": "Split column category_name by separator"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "price",
+    "expression": "grel:if(\"price\">100,1,0)",
+    "onError": "set-to-blank",
+    "newColumnName": "high_priced",
+    "columnInsertIndex": 10,
+    "description": "Create column high_priced at index 10 based on column price using expression grel:if(\"price\">100,1,0)"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "high_priced",
+    "expression": "grel:if('row.cells'>100,1,0)",
+    "onError": "keep-original",
+    "newColumnName": "high_priced1",
+    "columnInsertIndex": 11,
+    "description": "Create column high_priced1 at index 11 based on column high_priced using expression grel:if('row.cells'>100,1,0)"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "price",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "10"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": 10
+      }
+    ],
+    "description": "Mass edit cells in column price"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "high_priced1",
+    "expression": "grel:if(value > 100, \"1\", \"0\")",
+    "onError": "set-to-blank",
+    "newColumnName": "dddd2",
+    "columnInsertIndex": 12,
+    "description": "Create column dddd2 at index 12 based on column high_priced1 using expression grel:if(value > 100, \"1\", \"0\")"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "category_name 5",
+    "description": "Remove column category_name 5"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "category_name 4",
+    "description": "Remove column category_name 4"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "price",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "35"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": 35
+      }
+    ],
+    "description": "Mass edit cells in column price"
+  }
+]
