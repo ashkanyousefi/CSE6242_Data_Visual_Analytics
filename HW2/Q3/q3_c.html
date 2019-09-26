@@ -105,17 +105,17 @@ d3.csv("earthquakes.csv").then(function(dataset)
 
 
     
-    var xScale = d3.scaleLinear()
+    var xScale = d3.scaleSqrt()
     .domain([x_min, x_max]) // input
     .range([0, width]); // output
 
     scale_factor=70
-	var radiusScale = d3.scaleLinear()
+	var radiusScale = d3.scaleSqrt()
 				.domain([0,100])
 				.range([0, 100]);
 
     // 6. Y scale will use the randomly generate number 
-    var yScale = d3.scaleLinear()
+    var yScale = d3.scaleSqrt()
         .domain([y_min, y_max]) //input
         .range([height, 0]); //output  //? why it is not starting from zero
 
