@@ -11,6 +11,7 @@ path.link {
 
 circle {
   fill: #ccc;
+  stroke: #fff;
   stroke: black;
   stroke-width: 1.5px;
 }
@@ -24,7 +25,6 @@ text {
 </style>
 <body>
 <script>
-
 
 // get the data
 links =  [
@@ -183,11 +183,6 @@ links.forEach(function(link) {
         (nodes[link.source] = {name: link.source});
     link.target = nodes[link.target] ||
         (nodes[link.target] = {name: link.target});
-    // Added by Ash
-    link.value = nodes[link.value] ||
-        (nodes[link.value] = {name: link.value});
-    // Added by Ash
-
 });
 
 var width = 1200,
@@ -216,28 +211,20 @@ var path = svg.append("g")
 .append("path")
 .attr("class", function(d) { return "link " + d.type; });
 
-console.log(force.nodes())
-
 // define the nodes
 var node = svg.selectAll(".node")
     .data(force.nodes())
-    .enter().append("g")
+  .enter().append("g")
     .attr("class", "node")
     .call(d3.drag()
       .on("start", dragstarted)
       .on("drag", dragged)
       .on("end", dragended)
-    )
-    
-node.append("circle")
-    .attr("r", 5)
-    .append("text").text("ali")
+      );
+
 // add the nodes
-// node.
-//     .data(foce.nodes)
-      //Added by Ash
-    // .text(function(d) {return d.source});
-    // .text('Ash')
+node.append("circle")
+    .attr("r", 5);
 
 // add the curvy lines
 function tick() {
@@ -284,7 +271,4 @@ function dragended(d) {
 
 </script>
 </body>
-
-
-
 </html>
