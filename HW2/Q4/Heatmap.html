@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v5.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_first_heatmap"></div>
+
+<script>
+// ? why do not we tag body just after the headers.
+// set the dimensions and margins of the graph
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
+  width = 1000 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+// var svg = d3.select("#my_dataviz")
+
+var svg = d3.select("#my_first_heatmap")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+// Labels of row and columns
+// ? I am not clear with the function why the error need to be in the begining not the 
+// second part of the argument.
+
+//Read the data
+d3.csv("earthquakes1.csv").then(function(data) {
+  
+  dataset = []
+  years = ["2010", "2011", "2012", "2013", "2014", "2015"]
+  for (year of years)
+  {
+    data.forEach(function(d, i) {dataset.push({"x":d["States"], "y":year, "value":d[year], "cat":d["Category"]})});
+  }
+  
+  dataset = dataset.filter(function (d) {return d.cat === "10 to 99"})
+  console.log(dataset);
+
+  values = dataset.map(function(d){return d.value})
+  
+  value_min = Math.min(...values)
+  value_max = Math.max(...values)
+
+  // Build X scales and axis:
+  var x = d3.scaleBand()
+      .range([ 0, width])
+      .domain(Array.from(new Set(dataset.map(function(d) {return d.x}))))
+      .padding(0.001);
+  
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+
+  // Build Y scales and axis:
+  var y = d3.scaleBand()
+    .range([ height, 0 ])
+    .domain(years)
+    .padding(0.01);
+
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+  // Build color scale
+  var myColor = d3.scaleLinear()
+    .range(["white", "#FFC300"])
+    .domain([value_min,value_max])
+
+  svg.selectAll()
+    .data(dataset)
+    .enter()
+    .append("rect")
+    .attr("x", function(d) { return x(d.x) })
+    .attr("y", function(d) { return y(d.y) })
+    .attr("width", x.bandwidth() )
+    .attr("height", y.bandwidth() )
+    .style("fill", function(d) { return myColor(d.value)} )
+  type='text/javascript'
+  var data = ["Option 1", "Option 2", "Option 3"];
+
+  var select = d3.select('body')
+    .append('select')
+      .attr('class','select')
+      .on('change',onchange)
+
+  var options = select
+    .selectAll('option')
+    .data(data).enter()
+    .append('option')
+      .text(function (d) { return d; });
+
+  function onchange() {
+    selectValue = d3.select('select').property('value')
+    d3.select('body')
+      .append('p')
+      .text(selectValue + ' is the last selected option.')
+  };
+})
+
+
+
+
+</script>
+
+
+
