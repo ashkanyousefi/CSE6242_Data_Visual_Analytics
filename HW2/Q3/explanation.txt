@@ -1,0 +1,9 @@
+There are two main reasons to use logarithmic scales in charts and graphs. The first is to respond to skewness towards large values; i.e.,
+ cases in which one or a few points are much larger than the bulk of the data. The second is to show percent change or multiplicative factors.
+
+As the number of earthquaqes for different scales [5_5.9] to [8.0+] varies in a different scale, it is very important 
+to change the scale of the y axis in a way that it is easy to see the number of occurances in the y axis. Two solutions are implemented one based on the 
+square root scale and the other based on the log scale. The log scale increases the range for the smaller values and decreases the values for the larger amounts.
+The square root scale also have similar impacts to log scale.Generally, square root is weaker than the logarithm and the cube root.
+It is also used for reducing right skewness, and also has the advantage that it can be applied to zero values. Note that the square root of an area has
+the units of a length. It is commonly applied to counted data, especially if the values are mostly rather small.

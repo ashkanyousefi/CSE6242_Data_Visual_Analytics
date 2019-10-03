@@ -109,7 +109,7 @@ d3.csv("earthquakes.csv").then(function(dataset)
     .domain([x_min, x_max]) // input
     .range([0, width]); // output
 
-    scale_factor=70
+    scale_factor=20
 	var radiusScale = d3.scaleLinear()
 				.domain([0,100])
 				.range([0, 100]);
@@ -219,6 +219,15 @@ d3.csv("earthquakes.csv").then(function(dataset)
         .attr("cx", function(d, i){return xScale(d.year)})
         .attr("cy", function(d,i){return yScale(d['8.0+'])})
         .attr("r", function(d,i){return radiusScale(d['Estimated Deaths']/r_max*scale_factor)})
+
+        svg.append("text")
+        .attr("x", width/2)             
+        .attr("y", height-top)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "30px") 
+        .style("text-decoration", "underline")  
+        .text("World wide earthquake states from 2000 to 2015 with symbols")
+
 
     })
     // ? is the above scaling is correct or I need to use another alternative 

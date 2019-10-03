@@ -62,7 +62,6 @@
 </style>
 <!-- Body tag is where we will append our SVG and SVG objects-->
 
-
 <!-- Load in the d3 library -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script>
@@ -130,7 +129,6 @@ d3.csv("earthquakes.csv").then(function(dataset)
         .curve(d3.curveMonotoneX) // apply smoothing to the line
     // 1. Add the SVG to the page and employ #2
 
-
     var line3 = d3.line()
     //? Is it getting the d from the above dataset or no and Q2 ? what is i 
         // .x(function(d, i) {return xScale(d.year);})
@@ -145,7 +143,6 @@ d3.csv("earthquakes.csv").then(function(dataset)
     
     // ? where should I put the body tag?
     // <body>    // 1. Add the SVG to the page and employ #2 
-    
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -216,6 +213,14 @@ d3.csv("earthquakes.csv").then(function(dataset)
         .attr("cx", function(d, i){return xScale(d.year)})
         .attr("cy", function(d,i){return yScale(d['8.0+'] + 1)})
         .attr("r", function(d,i){return (radiusScale(d['Estimated Deaths'])).toFixed(2)})
+
+        svg.append("text")
+        .attr("x", 20)             
+        .attr("y", 10)
+        .attr("text-anchor", "bottom")  
+        .style("font-size", "30px") 
+        .style("text-decoration", "underline")  
+        .text("World wide earthquake states from 2000 to 2015 log scale")
 
     })
     // ? is the above scaling is correct or I need to use another alternative 
