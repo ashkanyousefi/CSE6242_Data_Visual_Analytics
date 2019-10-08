@@ -7,29 +7,29 @@ Rank3:Tableau
 Ease to maintain the visualization for developers (e.g., difficulty of the maintenance of the product as the requirements change, the data changes, the hosting platform changes, etc.) [40 words]
 
 The maintenance of the visualization is easier in platforms like Tableau. Ranking for ease of maintenance:
-Rank1: Tableau
+Rank1:Tableau
 Rank2:Matplotlib
 Rank3:D3
 The tableau provides continues updates for the platform and the data pipeline.
 
 
 Usability of visualization developed for end users [40 words]
-
 platform based software provides greater flexibility for the end-users, support from the platform provider, greater documentation easier integrations with other tools as well as less IT knowledge needed for any minor change.
-Rank1: Tableau
+Rank1:Tableau
 Rank2:Matplot lib and D3 (almost same)
-
+Rank3:D3
 
 Scalability of visualization to “large” datasets [40 words]
 The open source libraries like D3 provides better flexibility for scalability as there is no limit on the license limitations for the amount of data to process and not limit for integrations with other data types.
 Rank 1: D3
-Rank2: Matplot lib
-Rank3: Tableau
+Rank2:Tableau
+Rank3: Matplotlib
 
 
 System requirements to run the visualization (e.g., browsers, OS, software licensing) for end users [40 words]
 
 The D3 has greater advantage regarding the above point as it can run based on the browser and very light weight. It is also open source and no licensing is needed.
 Rank 1: D3
-Rank2: Matplotlib
-Rank3: Tableau
+Rank2: Tableau
+Rank3: Matplotlib
+

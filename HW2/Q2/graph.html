@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<script src="../lib/d3.v5.min.js"></script>
+<script src="/lib/d3.v5.min.js"></script>
 <style>
 
 path.link {
@@ -20,6 +20,14 @@ text {
   fill: #000;
   font: 10px sans-serif;
   pointer-events: none;
+}
+
+.solid{
+   stroke:solid;
+}
+
+.dashed{
+   stroke-dasharray: 5,5; 
 }
 
 </style>
@@ -215,7 +223,7 @@ var path = svg.append("g")
 .data(links)
 .enter()
 .append("path")
-.attr("class", function(d) { return "link " + d.type; });
+.attr("stroke-dasharray", "1,1")
 
 //? added by ash
 // link.style('stroke-dasharray', function(d){ if(d['value'] == 1 ){
@@ -227,9 +235,7 @@ var path = svg.append("g")
 
 //? added by ash
 
-
 console.log(force.nodes())
-
 
 
 

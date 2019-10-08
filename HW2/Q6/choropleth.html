@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>US States Earthquakes</title>
+    <style>
+        .background {
+            fill: none;
+            pointer-events: all;
+        }
+
+        #states {
+            fill: #aaa;
+        }
+
+        #states .active {
+            display:none;
+        }
+
+        #state-borders {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 1.5px;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="viz"></div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+    <script type="text/javascript" src="https://d3js.org/topojson.v3.min.js"></script>
+    <script type="text/javascript">
+        function range(N)
+        {
+            foo = [];
+            for (i = 0; i < N; i++)
+            {
+                foo.push(i)
+            }
+            return foo;
+        }
+        var margin = {
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right:10
+        }, width = parseInt(d3.select('.viz').style('width'))
+            , width = width - margin.left - margin.right
+            , mapRatio = 0.5
+            , height = width * mapRatio
+            , active = d3.select(null);
+
+        d3.csv("state-earthquakes.csv").then(earthquakes => d3.json("states-10m.json").then(us => ready(earthquakes, us)))
+
+        var svg = d3.select('.viz').append('svg')
+            .attr('class', 'center-container')
+            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', width + margin.left + margin.right);
+
+        svg.append('rect')
+            .attr('class', 'background center-container')
+            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', width + margin.left + margin.right)
+
+
+        var projection = d3.geoAlbersUsa()
+            .translate([width /2 , height / 2])
+            .scale(width);
+
+        var path = d3.geoPath()
+            .projection(projection);
+
+        var g = svg.append("g")
+            .attr('class', 'center-container center-items us-state')
+            .attr('transform', 'translate('+margin.left+','+margin.top+')')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+
+        function ready(earthquakes, us) {
+            console.log(earthquakes)
+            console.log(us)
+            
+            temp_eq = {}
+            earthquakes.map(function(d){temp_eq[d["States"]] = d["Total Earthquakes"]})
+            earthquakes = temp_eq
+            states = topojson.feature(us, us.objects.states).features
+            states = states.map(function(d) {d.name = d.properties.name; d.total = earthquakes[d.name]; return d})
+            console.log(states)
+
+            values = states.map(function(d) {if(d.total){return d.total} else{return 0}})
+            min_value = Math.min(...values)
+            max_value = Math.max(...values)
+            console.log(values)
+            console.log([min_value, max_value])
+            
+            // Build color scale
+            var myColor = d3.scaleThreshold()
+                .range(range(6).map(function(i){return d3.interpolateReds(i/6.)}))
+                .domain([1, 5, 10, 50, 100, 500, 1000])
+
+            var colorLegend = d3.legendColor()
+                .labelFormat(d3.format(".0f"))
+                .scale(myColor)
+                .shapePadding(5)
+                .shapeWidth(50)
+                .shapeHeight(20)
+                .labelOffset(12)
+
+            svg.append("g")
+                .attr("transform", "translate(1000, 60)")
+                .call(colorLegend);
+            
+            g.append("g")
+                .attr("id", "states")
+                .selectAll("path")
+                .data(states)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("class", "state")
+                .style("fill", d => myColor(d.total))
+
+            g.append("path")
+                .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+                .attr("id", "state-borders")
+                .attr("d", path);
+
+        }
+    </script>
+</body>
+</html>

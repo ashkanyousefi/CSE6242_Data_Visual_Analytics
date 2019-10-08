@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        projection = ƒ(n)
+        projection = d3.geoAlbersUsa().scale(1300).translate([487.5, 305])
+        map = html`<svg viewBox="0 0 975 610">
+            <g fill="none" stroke="#000" stroke-linejoin="round" stroke-linecap="round">
+            <path stroke="#aaa" stroke-width="0.5" d="${path(topojson.mesh(us, us.objects.counties, (a, b) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0)))}"></path>
+            <path stroke-width="0.5" d="${path(topojson.mesh(us, us.objects.states, (a, b) => a !== b))}"></path>
+            <path d="${path(topojson.feature(us, us.objects.nation))}"></path>
+            </g>
+            </svg>`
+
+        path = ƒ(n)
+        path = d3.geoPath()
+        
+    </script>
+
+    
+
+
+
+
+
+
+
+</body>
+</html>
